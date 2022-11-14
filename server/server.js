@@ -1,10 +1,21 @@
 const express = require('express');
+const session = require('express-session')
 const path = require('path');
 const db = require('./config/connection');
 const routes = require('./routes');
 
+
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+const sess = {
+  secret: 'Super secret secret',
+  cookie: {},
+  resave: false,
+  saveUninitialized: true,
+};
+
+app.use(session(sess));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
