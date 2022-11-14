@@ -23,7 +23,7 @@ module.exports = {
       });
   },
   getToppings(req, res) {
-    User.findOne({ _id: req.params.ownerId })
+    User.findOne({ _id: req.params.userId })
       .select("__v")
       .then((user) => res.json(user.toppings))
       .catch((err) => res.status(500).json(err));
@@ -31,7 +31,7 @@ module.exports = {
   deleteTopping(req, res) {
     Topping.findOneAndDelete({ _id: req.params.toppingId })
       .then((topping) => {
-        return Pizza.deleteMany({ where: { toppings: req.params.toppingId }});
+        return Pizza.deleteMany({ where: { toppings: req.params.toppingId } });
       })
       .then(() =>
         res.json({
