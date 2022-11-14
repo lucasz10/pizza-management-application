@@ -5,20 +5,16 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Header, Footer } from '/components'
 
 // Imported pages for Routing
-import Login from './pages/Login';
-import CreateAccount from './pages/createAccount';
-import Home from './pages/Home';
-
+import { Login, CreateAccount, Home } from './pages';
 
 function App() {
   return (
-    
     <Router>
       <Header />
       <div className="flex-column justify-center align-center min-100-vh bg-primary">
         <Routes>
           <Route 
-            path="/" 
+            path="/login" 
             element={<Login />} 
           />
           <Route 
@@ -26,7 +22,7 @@ function App() {
             element={<CreateAccount />} 
           />
           <Route 
-            path="/:userId/home" 
+            path="/" 
             element={<Home />} 
           />
         </Routes>

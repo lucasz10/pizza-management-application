@@ -11,23 +11,31 @@ const userSchema = new Schema(
             type: String,
             required: true,
         },
+        isOwner: {
+            type: Boolean,
+        },
         owner_id: {
             type: String,
         },
-        chef_id: {
-            type: String,
-        },
+        toppings: [
+            {
+                type: Schema.Types.ObjectId,
+                ref: 'Topping',
+            }
+        ],
+        pizzas: [
+            {
+            type: Schema.Types.ObjectId,
+            ref: 'Pizza',
+            },
+        ],
     },
     {
         toJSON: {
           virtuals: true,
         },
-    }
+    },
 );
-
-userSchema.virtual('isOwner').get(function () {
-    return this.owner_id !== undefined;
-})
 
 const User = model('User', userSchema);
 
