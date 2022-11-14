@@ -1,8 +1,6 @@
 const router = require('express').Router();
-const chefRoutes = require('./chef-routes');
-const ownerRoutes = require('./owner-routes.js');
+const userRoutes = require('./user-routes.js');
 
-router.use('/chef', chefRoutes);
-router.use('/owner', ownerRoutes);
+router.use('/user', userRoutes);
 
 module.exports = router;

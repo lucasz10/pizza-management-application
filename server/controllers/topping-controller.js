@@ -5,18 +5,16 @@ module.exports = {
     Topping.create(req.body)
       .then((topping) => {
         return User.findOneAndUpdate(
-          { _id: req.body.ownerId },
+          { _id: req.body.userId },
           { $addToSet: { toppings: topping._id } },
           { new: true }
         );
       })
       .then((user) =>
         !user
-          ? res
-              .status(404)
-              .json({
-                message: "Topping created, but found no user with that ID",
-              })
+          ? res.status(404).json({
+              message: "Topping created, but found no user with that ID",
+            })
           : res.json("Created the topping 🎉")
       )
       .catch((err) => {
@@ -33,9 +31,13 @@ module.exports = {
   deleteTopping(req, res) {
     Topping.findOneAndDelete({ _id: req.params.toppingId })
       .then((topping) => {
-        return Pizza.deleteMany({ toppings: req.body.toppingName })    
+        return Pizza.deleteMany({ where: { toppings: req.params.toppingId }});
       })
-      .then(() => res.json({ message: "Topping and pizza recipes using the topping are deleted!" }))
+      .then(() =>
+        res.json({
+          message: "Topping and pizza recipes using the topping are deleted!",
+        })
+      )
       .catch((err) => res.status(500).json(err));
   },
   updateTopping(req, res) {
