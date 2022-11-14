@@ -1,21 +1,21 @@
-const { Topping, Owner, Pizza } = require("../models");
+const { Topping, User, Pizza } = require("../models");
 
 module.exports = {
   createTopping(req, res) {
     Topping.create(req.body)
       .then((topping) => {
-        return Owner.findOneAndUpdate(
-          { _id: req.body.owner_Id },
+        return User.findOneAndUpdate(
+          { _id: req.body.ownerId },
           { $addToSet: { toppings: topping._id } },
           { new: true }
         );
       })
-      .then((owner) =>
-        !owner
+      .then((user) =>
+        !user
           ? res
               .status(404)
               .json({
-                message: "Topping created, but found no owner with that ID",
+                message: "Topping created, but found no user with that ID",
               })
           : res.json("Created the topping 🎉")
       )
@@ -25,9 +25,9 @@ module.exports = {
       });
   },
   getToppings(req, res) {
-    Owner.findOne({ _id: req.params.ownerId })
+    User.findOne({ _id: req.params.ownerId })
       .select("__v")
-      .then((owner) => res.json(owner.toppings))
+      .then((user) => res.json(user.toppings))
       .catch((err) => res.status(500).json(err));
   },
   deleteTopping(req, res) {
