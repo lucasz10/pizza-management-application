@@ -24,43 +24,44 @@ module.exports = {
   },
   getPizzas(req, res) {
     User.findOne({ _id: req.params.userId })
-        .select("__v")
-        .then((user) => res.json(user.pizzas))
-        .catch((err) => res.status(500).json(err));
+      .select("__v")
+      .then((user) => res.json(user.pizzas))
+      .catch((err) => res.status(500).json(err));
   },
   deletePizza(req, res) {
     Pizza.findOneAndDelete({ _id: req.params.pizzaId })
-        .then((pizza) =>
-         !pizza
-            ? res.status(404).json({ message: 'No thought with this id!' })
-            : User.findOneAndUpdate(
-                {pizzas: req.params.pizzaId },
-                {$pull: { pizzas: req.params.pizzaId } },
-                {new: true}
+      .then((pizza) =>
+        !pizza
+          ? res.status(404).json({ message: "No pizza with this id!" })
+          : User.findOneAndUpdate(
+              { pizzas: req.params.pizzaId },
+              { $pull: { pizzas: req.params.pizzaId } },
+              { new: true }
             )
-        )
-        .then((user) =>
-            !user
-                ? res.status(404).json({ message: 'Pizza deleted but no user with this id!' })
-                : res.json({ message: 'Pizza successfully deleted!'})
-        )
-        .catch((err) => res.status(500).json(err));
+      )
+      .then((user) =>
+        !user
+          ? res
+              .status(404)
+              .json({ message: "Pizza deleted but no user with this id!" })
+          : res.json({ message: "Pizza successfully deleted!" })
+      )
+      .catch((err) => res.status(500).json(err));
   },
   updatePizza(req, res) {
     Pizza.findOneAndUpdate(
-        { _id: req.params.pizzaId },
-        { $set: req.body },
-        { runValidators: true, new: true }
+      { _id: req.params.pizzaId },
+      { $set: req.body },
+      { runValidators: true, new: true }
     )
-    .then((pizza) => 
+      .then((pizza) =>
         !pizza
-            ? res.status(404).json({ message: 'No pizza with this id!' })
-            : res.json(pizza)    
-    )
-    .catch((err) => {
+          ? res.status(404).json({ message: "No pizza with this id!" })
+          : res.json(pizza)
+      )
+      .catch((err) => {
         console.log(err);
         res.status(500).json(err);
-    })
-  }
-
+      });
+  },
 };
