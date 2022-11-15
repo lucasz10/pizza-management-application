@@ -1,4 +1,4 @@
-const { Topping, User, Pizza } = require("../models");
+const { Topping, User, Pizza } = require('../models');
 
 module.exports = {
   createTopping(req, res) {
@@ -13,9 +13,9 @@ module.exports = {
       .then((user) =>
         !user
           ? res.status(404).json({
-              message: "Topping created, but found no user with that ID",
+              message: 'Topping created, but found no user with that ID',
             })
-          : res.json("Created the topping 🎉")
+          : res.json('Created the topping 🎉')
       )
       .catch((err) => {
         console.log(err);
@@ -24,7 +24,7 @@ module.exports = {
   },
   getToppings(req, res) {
     User.findOne({ _id: req.params.userId })
-      .select("__v")
+      .select('__v')
       .then((user) => res.json(user.toppings))
       .catch((err) => res.status(500).json(err));
   },
@@ -35,7 +35,7 @@ module.exports = {
       })
       .then(() =>
         res.json({
-          message: "Topping and pizza recipes using the topping are deleted!",
+          message: 'Topping and pizza recipes using the topping are deleted!',
         })
       )
       .catch((err) => res.status(500).json(err));
@@ -48,7 +48,7 @@ module.exports = {
     )
       .then((course) =>
         !course
-          ? res.status(404).json({ message: "No topping with this id!" })
+          ? res.status(404).json({ message: 'No topping with this id!' })
           : res.json(course)
       )
       .catch((err) => res.status(500).json(err));

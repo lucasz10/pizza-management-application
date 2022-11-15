@@ -1,19 +1,17 @@
 const { Schema, model } = require('mongoose');
 
-const pizzaSchema = new Schema(
+const pizzaSchema = new Schema({
+  pizzaName: {
+    type: String,
+    required: true,
+  },
+  toppings: [
     {
-        pizzaName: {
-            type: String,
-            required: true,
-        },
-        toppings: [
-            {
-                type: Schema.Types.ObjectId,
-                ref: 'Topping'
-            }
-        ],
-    }
-);
+      type: Schema.Types.ObjectId,
+      ref: 'Topping',
+    },
+  ],
+});
 
 const Pizza = model('Pizza', pizzaSchema);
 

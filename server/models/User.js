@@ -1,40 +1,40 @@
 const { Schema, model } = require('mongoose');
 
 const userSchema = new Schema(
-    {
-        username: {
-            type: String,
-            required: true,
-            unique: true,
-        },
-        password: {
-            type: String,
-            required: true,
-        },
-        isOwner: {
-            type: Boolean,
-        },
-        owner_id: {
-            type: String,
-        },
-        toppings: [
-            {
-                type: Schema.Types.ObjectId,
-                ref: 'Topping',
-            }
-        ],
-        pizzas: [
-            {
-            type: Schema.Types.ObjectId,
-            ref: 'Pizza',
-            },
-        ],
+  {
+    username: {
+      type: String,
+      required: true,
+      unique: true,
     },
-    {
-        toJSON: {
-          virtuals: true,
-        },
+    password: {
+      type: String,
+      required: true,
     },
+    isOwner: {
+      type: Boolean,
+    },
+    owner_id: {
+      type: String,
+    },
+    toppings: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Topping',
+      },
+    ],
+    pizzas: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: 'Pizza',
+      },
+    ],
+  },
+  {
+    toJSON: {
+      virtuals: true,
+    },
+  }
 );
 
 const User = model('User', userSchema);
