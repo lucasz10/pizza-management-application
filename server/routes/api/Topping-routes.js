@@ -8,11 +8,7 @@ const {
 } = require('../../controllers/topping-controller');
 
 // /api/topping
-router
-  .route('/topping')
-  .get(getToppings)
-  .post(createTopping)
-  .put(updateTopping)
-  .delete(deleteTopping);
+router.route('/').post(createTopping).put(updateTopping).delete(deleteTopping);
 
+router.route('/:userId').get(getToppings);
 module.exports = router;

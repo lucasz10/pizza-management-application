@@ -8,11 +8,8 @@ const {
 } = require('../../controllers/pizza-controller');
 
 // /api/pizza
-router
-  .route('/pizza')
-  .get(getPizzas)
-  .post(createPizza)
-  .put(updatePizza)
-  .delete(deletePizza);
+router.route('/').post(createPizza).put(updatePizza).delete(deletePizza);
+
+router.route('/:userId').get(getPizzas);
 
 module.exports = router;

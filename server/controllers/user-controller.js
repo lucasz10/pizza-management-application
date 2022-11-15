@@ -3,25 +3,23 @@ const { User } = require('../models');
 module.exports = {
   async createUser(req, res) {
     try {
-      const userData = await User.findOne({ where: { email: req.body.email } });
+      const userData = await User.findOne({ email: req.body.email });
 
       if (userData) {
         res.status(400).json({ message: 'ERROR: User already exists!' });
         return;
       }
 
-      await User.create(req.body, {
-        individualHooks: true,
-        returning: true,
-      });
+      await User.create(req.body);
+
+      res.status(200).json({ message: 'User Created Successfully!' });
     } catch (err) {
       res.status(401).json(err);
     }
   },
   async login(req, res) {
     try {
-      const userData = await User.findOne({ where: { email: req.body.email } });
-
+      const userData = await User.findOne({ email: req.body.email });
       if (!userData) {
         res
           .status(400)
@@ -42,6 +40,7 @@ module.exports = {
         req.session.user_id = userData._id;
         req.session.logged_in = true;
         req.session.user_name = userData.username;
+        req.session.isOwner = userData.isOwner;
 
         res.json({ user: userData, message: 'You are now logged in!' });
       });

@@ -1,31 +1,28 @@
 const { Topping, User, Pizza } = require('../models');
 
 module.exports = {
-  createTopping(req, res) {
-    Topping.create(req.body)
-      .then((topping) => {
-        return User.findOneAndUpdate(
-          { _id: req.body.userId },
-          { $addToSet: { toppings: topping._id } },
-          { new: true }
-        );
-      })
-      .then((user) =>
-        !user
-          ? res.status(404).json({
-              message: 'Topping created, but found no user with that ID',
-            })
-          : res.json('Created the topping 🎉')
-      )
-      .catch((err) => {
-        console.log(err);
-        res.status(500).json(err);
-      });
+  async createTopping(req, res) {
+    if (req.session.logged_in && req.session.isOwner) {
+      const newTopping = await Topping.create(req.body);
+
+      if (!newTopping) {
+        return res.status(400).json({ message: 'Unable to create topping' });
+      }
+
+      await User.findOneAndUpdate(
+        { _id: req.session.user_id },
+        { $addToSet: { toppings: newTopping._id } }
+      );
+
+      return res
+        .status(200)
+        .json({ message: 'New Topping Created successfully!' });
+    }
   },
   getToppings(req, res) {
     User.findOne({ _id: req.params.userId })
       .select('__v')
-      .then((user) => res.json(user.toppings))
+      .then((user) => res.json(user))
       .catch((err) => res.status(500).json(err));
   },
   deleteTopping(req, res) {
