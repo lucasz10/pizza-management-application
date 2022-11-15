@@ -31,7 +31,7 @@ module.exports = {
   deleteTopping(req, res) {
     Topping.findOneAndDelete({ _id: req.params.toppingId })
       .then((topping) => {
-        return Pizza.deleteMany({ where: { toppings: req.params.toppingId } });
+        return Pizza.deleteMany({ where: { toppings: topping._id } });
       })
       .then(() =>
         res.json({
