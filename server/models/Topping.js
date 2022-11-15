@@ -5,6 +5,10 @@ const toppingSchema = new Schema({
     type: String,
     required: true,
   },
+  owner_id: {
+    type: String,
+    required: true,
+  },
 });
 
 const Topping = model('Topping', toppingSchema);

@@ -7,10 +7,12 @@ const pizzaSchema = new Schema({
   },
   toppings: [
     {
-      type: Schema.Types.ObjectId,
-      ref: 'Topping',
+      type: String,
     },
   ],
+  chef_id: {
+    type: String,
+  },
 });
 
 const Pizza = model('Pizza', pizzaSchema);

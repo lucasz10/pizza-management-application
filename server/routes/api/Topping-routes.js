@@ -8,7 +8,9 @@ const {
 } = require('../../controllers/topping-controller');
 
 // /api/topping
-router.route('/').post(createTopping).put(updateTopping).delete(deleteTopping);
+router.route('/').post(createTopping);
 
 router.route('/:userId').get(getToppings);
+
+router.route('/:toppingId').put(updateTopping).delete(deleteTopping);
 module.exports = router;

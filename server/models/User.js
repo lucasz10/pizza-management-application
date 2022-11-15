@@ -24,18 +24,6 @@ const userSchema = new Schema(
     owner_id: {
       type: String,
     },
-    toppings: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Topping',
-      },
-    ],
-    pizzas: [
-      {
-        type: Schema.Types.ObjectId,
-        ref: 'Pizza',
-      },
-    ],
   },
   {
     toJSON: {
