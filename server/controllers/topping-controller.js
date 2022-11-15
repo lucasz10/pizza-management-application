@@ -56,10 +56,7 @@ module.exports = {
 
       if (req.session.logged_in && req.session.isOwner) {
         await Topping.findOneAndUpdate(
-          {
-            toppingName: req.body.toppingName,
-            owner_id: req.session.user_id,
-          },
+          { _id: req.params.toppingId },
           { $set: req.body },
           { runValidators: true, new: true }
         );

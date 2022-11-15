@@ -1,4 +1,4 @@
-const { Pizza, User } = require('../models');
+const { Pizza } = require('../models');
 
 module.exports = {
   async createPizza(req, res) {
