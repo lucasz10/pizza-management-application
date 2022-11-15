@@ -1,50 +1,43 @@
 const { Pizza, User } = require('../models');
 
 module.exports = {
-  createPizza(req, res) {
-    Pizza.create(req.body)
-      .then((pizza) => {
-        return User.findOneAndUpdate(
-          { _id: req.body.userId },
-          { $addToSet: { pizzas: pizza._id } },
-          { new: true }
-        );
-      })
-      .then((user) =>
-        !user
-          ? res.status(404).json({
-              message: 'Pizza created, but found no user with that ID',
-            })
-          : res.json('Created the pizza 🎉')
-      )
-      .catch((err) => {
-        console.log(err);
-        res.status(500).json(err);
+  async createPizza(req, res) {
+    try {
+      const pizza = await Pizza.findOne({
+        toppings: req.body.toppings,
+        chef_id: req.session.user_id,
       });
+
+      if (pizza) {
+        return res.status(402).json({ message: 'Pizza already exists' });
+      }
+
+      if (req.session.logged_in && !req.session.isOwner) {
+        await Pizza.create({
+          pizzaName: req.body.pizzaName,
+          toppings: req.body.toppings,
+          chef_id: req.session.user_id,
+        });
+
+        return res
+          .status(200)
+          .json({ message: 'New Topping Created successfully!' });
+      }
+    } catch (err) {
+      res.status(401).json(err);
+    }
   },
   getPizzas(req, res) {
-    User.findOne({ _id: req.params.userId })
-      .select('__v')
-      .then((user) => res.json(user.pizzas))
+    Pizza.find({ chef_id: req.params.userId })
+      .then((pizza) => res.json(pizza))
       .catch((err) => res.status(500).json(err));
   },
   deletePizza(req, res) {
     Pizza.findOneAndDelete({ _id: req.params.pizzaId })
-      .then((pizza) =>
-        !pizza
-          ? res.status(404).json({ message: 'No pizza with this id!' })
-          : User.findOneAndUpdate(
-              { pizzas: req.params.pizzaId },
-              { $pull: { pizzas: req.params.pizzaId } },
-              { new: true }
-            )
-      )
-      .then((user) =>
-        !user
-          ? res
-              .status(404)
-              .json({ message: 'Pizza deleted but no user with this id!' })
-          : res.json({ message: 'Pizza successfully deleted!' })
+      .then(() =>
+        res.json({
+          message: 'Pizza recipe is deleted!',
+        })
       )
       .catch((err) => res.status(500).json(err));
   },

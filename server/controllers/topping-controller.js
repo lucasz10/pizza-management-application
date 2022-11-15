@@ -43,17 +43,33 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
-  updateTopping(req, res) {
-    Topping.findOneAndUpdate(
-      { _id: req.params.toppingId },
-      { $set: req.body },
-      { runValidators: true, new: true }
-    )
-      .then((course) =>
-        !course
-          ? res.status(404).json({ message: 'No topping with this id!' })
-          : res.json(course)
-      )
-      .catch((err) => res.status(500).json(err));
+  async updateTopping(req, res) {
+    try {
+      const topping = await Topping.findOne({
+        toppingName: req.body.toppingName,
+        owner_id: req.session.user_id,
+      });
+
+      if (topping) {
+        return res.status(402).json({ message: 'Topping already exists' });
+      }
+
+      if (req.session.logged_in && req.session.isOwner) {
+        await Topping.findOneAndUpdate(
+          {
+            toppingName: req.body.toppingName,
+            owner_id: req.session.user_id,
+          },
+          { $set: req.body },
+          { runValidators: true, new: true }
+        );
+
+        return res
+          .status(200)
+          .json({ message: 'Topping updated successfully!' });
+      }
+    } catch (err) {
+      res.status(401).json(err);
+    }
   },
 };
