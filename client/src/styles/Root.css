@@ -1,0 +1,16 @@
+:root {
+    font: 15px Helvetica, Arial, sans-serif;
+    --primary-background: #DAA520;
+    --secondary-background: white;
+    --text-con: white;
+    --text-norm: black;
+}
+
+body {
+    background-color: var(--secondary-background);
+
+}
+
+.btn {
+    background-color: var(--primary-background);
+}

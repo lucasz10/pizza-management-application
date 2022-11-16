@@ -1,0 +1,15 @@
+header{
+    padding-top: 20px ;
+    padding-bottom: 80px ;
+    background-image: linear-gradient(var(--primary-background),var(--secondary-background));
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-content: space-evenly;
+}
+
+header h1 {
+    flex: 1;
+    font-size: 40px ;
+    padding: 20px;
+}
