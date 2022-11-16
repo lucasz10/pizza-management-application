@@ -10,18 +10,7 @@ module.exports = {
         res.status(400).json({ message: 'ERROR: User already exists!' });
         return;
       }
-
-      if (req.body.logged_in && req.body.isOwner) {
-        await User.create({
-          username: req.body.username,
-          email: req.body.email,
-          password: req.body.password,
-          isOwner: false,
-          owner_id: req.body.user_id,
-        });
-      } else {
-        await User.create(req.body);
-      }
+      await User.create(req.body);
 
       res.status(200).json({ message: 'User Created Successfully!' });
     } catch (err) {

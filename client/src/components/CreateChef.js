@@ -3,7 +3,7 @@ import { createUser } from '../utils/api';
 
 import { checkPassword, validateEmail } from '../utils/helpers';
 
-function CreateNewAccount() {
+function CreateChef() {
   const [email, setEmail] = useState('');
   const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
@@ -41,6 +41,8 @@ function CreateNewAccount() {
       username: userName,
       email: email,
       password: password,
+      isOwner: false,
+      owner_id: localStorage.getItem('user_id'),
     };
 
     try {
@@ -56,7 +58,7 @@ function CreateNewAccount() {
     } catch (err) {
       console.error(err);
     }
-    alert('User created! Please log in.');
+    alert('User created! Let your chefs know they can login');
     setUserName('');
     setPassword('');
     setEmail('');
@@ -64,6 +66,8 @@ function CreateNewAccount() {
 
   return (
     <div>
+      <h2>Create an account for your chefs! </h2>
+
       <form className="form">
         <input
           value={email}
@@ -99,4 +103,4 @@ function CreateNewAccount() {
   );
 }
 
-export default CreateNewAccount;
+export default CreateChef;

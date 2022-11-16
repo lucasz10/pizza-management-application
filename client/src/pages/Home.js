@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+// Import react-bootstrap styles
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+import CreateChef from '../components/CreateChef';
+
 import Auth from '../utils/auth';
+import OwnerToppings from '../components/OwnerToppings';
 
 const Home = () => {
   const [isOwner, setOwner] = useState();
@@ -31,7 +37,10 @@ const Home = () => {
     <div>
       {isOwner ? (
         <div>
-          <h3>You are an owner!</h3>
+          <h3>Welcome to your dashboard, owner!</h3>
+          <CreateChef />
+          <h3 className="my-5"> Manage Your Toppings!</h3>
+          <OwnerToppings />
         </div>
       ) : (
         <div>

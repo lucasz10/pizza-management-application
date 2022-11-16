@@ -16,7 +16,7 @@ function App() {
   return (
     <Router>
       <Header />
-      <div className="flex-column justify-center align-center min-100-vh">
+      <div className="flex-column text-center align-center min-100-vh">
         <Routes>
           <Route path="/login" element={<LoginPage />} />
           <Route path="/" element={<Home />} />

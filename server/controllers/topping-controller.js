@@ -1,27 +1,22 @@
-const { Topping, Pizza } = require('../models');
+const { Topping } = require('../models');
 
 module.exports = {
   async createTopping(req, res) {
     try {
       const topping = await Topping.findOne({
         toppingName: req.body.toppingName,
-        owner_id: req.session.user_id,
+        owner_id: req.body.owner_id,
       });
 
       if (topping) {
         return res.status(402).json({ message: 'Topping already exists' });
       }
 
-      if (req.session.logged_in && req.session.isOwner) {
-        await Topping.create({
-          toppingName: req.body.toppingName,
-          owner_id: req.session.user_id,
-        });
+      await Topping.create(req.body);
 
-        return res
-          .status(200)
-          .json({ message: 'New Topping Created successfully!' });
-      }
+      return res
+        .status(200)
+        .json({ message: 'New Topping Created successfully!' });
     } catch (err) {
       res.status(401).json(err);
     }
@@ -33,12 +28,9 @@ module.exports = {
   },
   deleteTopping(req, res) {
     Topping.findOneAndDelete({ _id: req.params.toppingId })
-      .then((topping) => {
-        return Pizza.deleteMany({ toppings: topping.toppingName });
-      })
       .then(() =>
         res.json({
-          message: 'Topping and pizza recipes using the topping are deleted!',
+          message: 'Topping is deleted!',
         })
       )
       .catch((err) => res.status(500).json(err));
@@ -47,24 +39,20 @@ module.exports = {
     try {
       const topping = await Topping.findOne({
         toppingName: req.body.toppingName,
-        owner_id: req.session.user_id,
+        owner_id: req.body.owner_id,
       });
 
       if (topping) {
         return res.status(402).json({ message: 'Topping already exists' });
       }
 
-      if (req.session.logged_in && req.session.isOwner) {
-        await Topping.findOneAndUpdate(
-          { _id: req.params.toppingId },
-          { $set: req.body },
-          { runValidators: true, new: true }
-        );
+      await Topping.findOneAndUpdate(
+        { _id: req.params.toppingId },
+        { $set: req.body },
+        { runValidators: true, new: true }
+      );
 
-        return res
-          .status(200)
-          .json({ message: 'Topping updated successfully!' });
-      }
+      return res.status(200).json({ message: 'Topping updated successfully!' });
     } catch (err) {
       res.status(401).json(err);
     }

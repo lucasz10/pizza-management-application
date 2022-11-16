@@ -55,7 +55,6 @@ export const deleteTopping = (toppingId) => {
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(toppingId),
   });
 };
 

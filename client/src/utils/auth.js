@@ -24,6 +24,7 @@ class AuthService {
     localStorage.setItem('id_token', idToken.token);
     localStorage.setItem('isOwner', idToken.userData.isOwner);
     localStorage.setItem('user_id', idToken.userData._id);
+    localStorage.setItem('owner_id', idToken.userData.owner_id);
     window.location.assign('/');
   }
 
@@ -32,6 +33,7 @@ class AuthService {
     localStorage.removeItem('id_token');
     localStorage.removeItem('user_id');
     localStorage.removeItem('isOwner');
+    localStorage.removeItem('owner_id');
     // this will reload the page and reset the state of the application
     window.location.assign('/login');
   }

@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React from 'react';
 // Here we are importing a CSS file as a dependency
 import '../styles/Header.css';
 import Button from 'react-bootstrap/Button';
