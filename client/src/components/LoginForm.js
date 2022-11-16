@@ -37,9 +37,8 @@ function LoginForm() {
         throw new Error('something went wrong!');
       }
 
-      const newUser = await res.json();
-      console.log(newUser);
-      navigate(`/home`);
+      localStorage.setItem('logged_in', true);
+      navigate(`/`);
     } catch (err) {
       console.error(err);
     }
