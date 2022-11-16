@@ -21,11 +21,7 @@ function Header() {
             Logout
           </Button>
         ) : (
-          <>
-            <Link className="btn btn-lg btn-primary m-2" to="/login">
-              Login
-            </Link>
-          </>
+          <></>
         )}
       </div>
     </header>
