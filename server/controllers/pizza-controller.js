@@ -42,7 +42,7 @@ module.exports = {
     try {
       const topping = await Pizza.findOne({
         toppings: req.body.toppings,
-        chef_id: req.body.user_id,
+        chef_id: req.body.chef_id,
       });
 
       if (topping) {

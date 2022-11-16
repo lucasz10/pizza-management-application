@@ -101,7 +101,7 @@ const CreatePizza = () => {
                 variant="primary"
                 value={topping.toppingName}
                 onClick={addTopping}
-                className="mx-2"
+                className="m-2"
               >
                 {topping.toppingName}
               </Button>
@@ -114,7 +114,7 @@ const CreatePizza = () => {
                 variant="primary"
                 value={topping}
                 onClick={removeTopping}
-                className="mx-2"
+                className="m-2"
               >
                 {topping}
               </Button>
@@ -129,7 +129,7 @@ const CreatePizza = () => {
             onChange={handleInputChange}
           />
         </Form.Group>
-        <Button variant="primary" onClick={handleFormSubmit}>
+        <Button variant="primary" onClick={handleFormSubmit} className="m-2">
           Create Pizza!
         </Button>
       </Form>

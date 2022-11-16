@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Form from 'react-bootstrap/Form';
+import Container from 'react-bootstrap/Container';
 import { getAllPizzas, updatePizza, deletePizza } from '../utils/api';
 
 const ChefDashboard = () => {
@@ -34,6 +35,30 @@ const ChefDashboard = () => {
     }
   };
 
+  const handlePizzaUpdate = async (e) => {
+    e.preventDefault();
+
+    const formData = {
+      pizzaName: updatedPizzaName,
+      chef_id: localStorage.getItem('user_id'),
+      pizzaId: e.target.value,
+    };
+
+    try {
+      const res = await updatePizza(formData);
+      if (!res.ok) {
+        alert('Error updating topping.');
+        return;
+      }
+    } catch (err) {
+      console.error(err);
+    }
+
+    setUpdatedPizzaName('');
+    alert('Pizza Name updated Successfully!');
+    window.location.reload();
+  };
+
   const handlePizzaDelete = async (e) => {
     e.preventDefault();
     console.log(e.target.value);
@@ -52,23 +77,29 @@ const ChefDashboard = () => {
   };
 
   return (
-    <div>
+    <Container className="align-items-center">
       {pizzaList.map((pizza) => {
         return (
-          <Card.Body key={pizza._id} className="col-3">
+          <Card.Body key={pizza._id}>
             <Card.Title>{pizza.pizzaName}</Card.Title>
+            <Card.Body>{pizza.toppings}</Card.Body>
             <Form>
               <Form.Group className="mb-3" controlId="formUpdatePizza">
                 <Form.Label>Enter new name for Pizza</Form.Label>
                 <Form.Control
                   type="text"
-                  placeholder="Enter new topping name"
+                  placeholder="Enter new pizza name"
                   name="updatedPizzaName"
                   value={updatedPizzaName.name}
                   onChange={handleInputChange}
                 />
               </Form.Group>
-              <Button variant="warning" value={pizza._id}>
+              <Button
+                variant="warning"
+                value={pizza._id}
+                onClick={handlePizzaUpdate}
+                className="m-2"
+              >
                 Update Pizza Name!
               </Button>
             </Form>
@@ -76,13 +107,14 @@ const ChefDashboard = () => {
               variant="danger"
               value={pizza._id}
               onClick={handlePizzaDelete}
+              className="m-2"
             >
               Delete Pizza!
             </Button>
           </Card.Body>
         );
       })}
-    </div>
+    </Container>
   );
 };
 export default ChefDashboard;

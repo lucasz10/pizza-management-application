@@ -70,7 +70,6 @@ const OwnerToppings = () => {
   const handleToppingUpdate = async (e) => {
     e.preventDefault();
 
-    console.log(updatedTopping);
     const formData = {
       toppingName: updatedTopping,
       owner_id: localStorage.getItem('user_id'),
