@@ -21,14 +21,14 @@ module.exports = {
 
         return res
           .status(200)
-          .json({ message: 'New Topping Created successfully!' });
+          .json({ message: 'New Pizza Created successfully!' });
       }
     } catch (err) {
       res.status(401).json(err);
     }
   },
   getPizzas(req, res) {
-    Pizza.find({ chef_id: req.params.userId })
+    Pizza.find({ chef_id: req.session.user_id })
       .then((pizza) => res.json(pizza))
       .catch((err) => res.status(500).json(err));
   },
@@ -41,20 +41,30 @@ module.exports = {
       )
       .catch((err) => res.status(500).json(err));
   },
-  updatePizza(req, res) {
-    Pizza.findOneAndUpdate(
-      { _id: req.params.pizzaId },
-      { $set: req.body },
-      { runValidators: true, new: true }
-    )
-      .then((pizza) =>
-        !pizza
-          ? res.status(404).json({ message: 'No pizza with this id!' })
-          : res.json(pizza)
-      )
-      .catch((err) => {
-        console.log(err);
-        res.status(500).json(err);
+  async updatePizza(req, res) {
+    try {
+      const topping = await Pizza.findOne({
+        toppings: req.body.toppings,
+        chef_id: req.session.user_id,
       });
+
+      if (topping) {
+        return res.status(402).json({ message: 'Pizza already exists' });
+      }
+
+      if (req.session.logged_in && req.session.isOwner) {
+        await Topping.findOneAndUpdate(
+          { _id: req.params.toppingId },
+          { $set: req.body },
+          { runValidators: true, new: true }
+        );
+
+        return res
+          .status(200)
+          .json({ message: 'Topping updated successfully!' });
+      }
+    } catch (err) {
+      res.status(401).json(err);
+    }
   },
 };
