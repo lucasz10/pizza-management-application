@@ -29,8 +29,8 @@ export const logout = () => {
 };
 
 // Topping API requests
-export const getAllToppings = () => {
-  return fetch('/api/topping', {
+export const getAllToppings = (userId) => {
+  return fetch(`/api/topping/${userId}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ export const createTopping = (toppingData) => {
 };
 
 export const updateTopping = (toppingData) => {
-  return fetch('/api/topping', {
+  return fetch(`/api/topping/${toppingData.toppingId}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ export const updateTopping = (toppingData) => {
 };
 
 export const deleteTopping = (toppingId) => {
-  return fetch('/api/topping', {
+  return fetch(`/api/topping/${toppingId}`, {
     method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
@@ -89,7 +89,7 @@ export const createPizza = (pizzaData) => {
 };
 
 export const updatePizza = (pizzaData) => {
-  return fetch('/api/pizza', {
+  return fetch(`/api/pizza/${pizzaData.pizzaId}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',
@@ -99,7 +99,7 @@ export const updatePizza = (pizzaData) => {
 };
 
 export const deletePizza = (pizzaId) => {
-  return fetch('/api/pizza', {
+  return fetch(`/api/pizza/${pizzaId}`, {
     method: 'PUT',
     headers: {
       'Content-Type': 'application/json',

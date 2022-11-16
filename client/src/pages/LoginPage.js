@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-const CreateAccount = () => {
-    
-}
+const LoginPage = () => {};
 
-export default CreateAccount;
+export default LoginPage;
