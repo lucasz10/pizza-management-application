@@ -1,4 +1,5 @@
 const { User } = require('../models');
+const { signToken } = require('../utils/auth');
 
 module.exports = {
   async createUser(req, res) {
@@ -46,39 +47,11 @@ module.exports = {
         return;
       }
 
-      req.session.save(() => {
-        req.session.user_id = userData._id;
-        req.session.logged_in = true;
-        req.session.user_name = userData.username;
-        req.session.isOwner = userData.isOwner;
-
-        res.json({ user: userData, message: 'You are now logged in!' });
-      });
+      const token = signToken(userData);
+      res.status(200).json({ message: 'Logged In Successfully!' });
+      return { token, userData };
     } catch (err) {
       res.status(400).json(err);
-    }
-  },
-  logout(req, res) {
-    if (req.session.logged_in) {
-      req.session.destroy(() => {
-        res.status(204).end();
-      });
-    } else {
-      res.status(404).end();
-    }
-  },
-  getLoggedInStatus(req, res) {
-    if (req.session.logged_in) {
-      res.status(204).json({ message: 'User is logged in!' });
-    } else {
-      res.status(404).json({ message: 'User is not logged in!' });
-    }
-  },
-  getOwnerStatus(req, res) {
-    if (req.session.isOwner) {
-      res.status(204).json({ message: 'User is Owner!' });
-    } else {
-      res.status(404).json({ message: 'User is not Owner!' });
     }
   },
 };
