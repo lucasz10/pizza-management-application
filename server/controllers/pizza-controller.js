@@ -53,15 +53,13 @@ module.exports = {
       }
 
       if (req.session.logged_in && req.session.isOwner) {
-        await Topping.findOneAndUpdate(
-          { _id: req.params.toppingId },
+        await Pizza.findOneAndUpdate(
+          { _id: req.params.pizzaId },
           { $set: req.body },
           { runValidators: true, new: true }
         );
 
-        return res
-          .status(200)
-          .json({ message: 'Topping updated successfully!' });
+        return res.status(200).json({ message: 'Pizza updated successfully!' });
       }
     } catch (err) {
       res.status(401).json(err);
