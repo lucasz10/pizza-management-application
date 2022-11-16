@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-import { createUser } from '../utils/api';
+import { login } from '../utils/api';
 
-import { checkPassword, validateEmail } from '../utils/helpers';
-
-function CreateNewAccount() {
+function LoginForm() {
   const [email, setEmail] = useState('');
-  const [userName, setUserName] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -16,8 +13,6 @@ function CreateNewAccount() {
 
     if (inputType === 'email') {
       setEmail(inputValue);
-    } else if (inputType === 'userName') {
-      setUserName(inputValue);
     } else {
       setPassword(inputValue);
     }
@@ -26,28 +21,16 @@ function CreateNewAccount() {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    if (!validateEmail(email) || !userName) {
-      setErrorMessage('Email or username is invalid');
-      return;
-    }
-    if (!checkPassword(password)) {
-      setErrorMessage(
-        `Choose a more secure password for the account: ${userName}`
-      );
-      return;
-    }
-
     const formData = {
-      username: userName,
       email: email,
       password: password,
     };
 
     try {
-      const res = await createUser(formData);
+      const res = await login(formData);
 
       if (!res.ok) {
-        setErrorMessage('Something Went Wrong!');
+        setErrorMessage('Email or username is invalid');
         throw new Error('something went wrong!');
       }
 
@@ -56,8 +39,7 @@ function CreateNewAccount() {
     } catch (err) {
       console.error(err);
     }
-    alert('User created! Please log in.');
-    setUserName('');
+
     setPassword('');
     setEmail('');
   };
@@ -71,13 +53,6 @@ function CreateNewAccount() {
           onChange={handleInputChange}
           type="email"
           placeholder="email"
-        />
-        <input
-          value={userName}
-          name="userName"
-          onChange={handleInputChange}
-          type="text"
-          placeholder="username"
         />
         <input
           value={password}
@@ -99,4 +74,4 @@ function CreateNewAccount() {
   );
 }
 
-export default CreateNewAccount;
+export default LoginForm;

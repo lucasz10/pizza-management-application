@@ -20,7 +20,7 @@ export const login = (userData) => {
 };
 
 export const logout = () => {
-  return fetch('/api/user/login', {
+  return fetch('/api/user/logout', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
