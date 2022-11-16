@@ -5,9 +5,11 @@ import { useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 import CreateChef from '../components/CreateChef';
+import OwnerToppings from '../components/OwnerToppings';
+import ChefDashboard from '../components/ChefDashboard';
+import CreatePizza from '../components/CreatePizza';
 
 import Auth from '../utils/auth';
-import OwnerToppings from '../components/OwnerToppings';
 
 const Home = () => {
   const [isOwner, setOwner] = useState();
@@ -19,7 +21,7 @@ const Home = () => {
         navigate('/login');
       }
     };
-
+    // Changes the home page rendering based on if user is an owner
     const checkOwner = () => {
       const storedOwner = localStorage.getItem('isOwner');
 
@@ -44,7 +46,9 @@ const Home = () => {
         </div>
       ) : (
         <div>
-          <h3>You are not an owner!</h3>
+          <h3>Welcome to your dashboard, chef!</h3>
+          <h3>Create some new recipes!</h3>
+          <CreatePizza />
         </div>
       )}
     </div>

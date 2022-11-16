@@ -8,7 +8,10 @@ const {
 } = require('../../controllers/pizza-controller');
 
 // /api/pizza
-router.route('/').get(getPizzas).post(createPizza);
+router.route('/').post(createPizza);
+
+// /api/pizza/chef_id
+router.route('/:chef_id').get(getPizzas);
 
 // /api/pizza/pizzaId
 router.route('/:pizzaId').put(updatePizza).delete(deletePizza);
