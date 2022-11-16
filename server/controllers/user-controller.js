@@ -67,4 +67,18 @@ module.exports = {
       res.status(404).end();
     }
   },
+  getLoggedInStatus(req, res) {
+    if (req.session.logged_in) {
+      res.status(204).json({ message: 'User is logged in!' });
+    } else {
+      res.status(404).json({ message: 'User is not logged in!' });
+    }
+  },
+  getOwnerStatus(req, res) {
+    if (req.session.isOwner) {
+      res.status(204).json({ message: 'User is Owner!' });
+    } else {
+      res.status(404).json({ message: 'User is not Owner!' });
+    }
+  },
 };

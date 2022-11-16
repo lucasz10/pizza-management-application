@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
 import { login } from '../utils/api';
+import { useNavigate } from 'react-router-dom';
 
 function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+
+  let navigate = useNavigate();
 
   const handleInputChange = (e) => {
     const { target } = e;
@@ -36,6 +39,7 @@ function LoginForm() {
 
       const newUser = await res.json();
       console.log(newUser);
+      navigate(`/home`);
     } catch (err) {
       console.error(err);
     }

@@ -18,8 +18,9 @@ function App() {
       <Header />
       <div className="flex-column justify-center align-center min-100-vh">
         <Routes>
+          <Route path="/" element={<Navigate to="/login" />} />
           <Route path="/login" element={<LoginPage />} />
-          <Route path="/" element={<Home />} />
+          <Route path="/home" element={<Home />} />
         </Routes>
       </div>
       <Footer />
