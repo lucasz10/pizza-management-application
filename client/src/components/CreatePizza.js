@@ -36,7 +36,6 @@ const CreatePizza = () => {
 
   const addTopping = (e) => {
     e.preventDefault();
-    console.log(newPizzaToppings);
 
     for (let i = 0; i < newPizzaToppings.length; i++) {
       if (newPizzaToppings[i] === e.target.value) {

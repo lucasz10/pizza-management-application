@@ -42,22 +42,20 @@ module.exports = {
     try {
       const topping = await Pizza.findOne({
         toppings: req.body.toppings,
-        chef_id: req.session.user_id,
+        chef_id: req.body.user_id,
       });
 
       if (topping) {
         return res.status(402).json({ message: 'Pizza already exists' });
       }
 
-      if (req.session.logged_in && req.session.isOwner) {
-        await Pizza.findOneAndUpdate(
-          { _id: req.params.pizzaId },
-          { $set: req.body },
-          { runValidators: true, new: true }
-        );
+      await Pizza.findOneAndUpdate(
+        { _id: req.params.pizzaId },
+        { $set: req.body },
+        { runValidators: true, new: true }
+      );
 
-        return res.status(200).json({ message: 'Pizza updated successfully!' });
-      }
+      return res.status(200).json({ message: 'Pizza updated successfully!' });
     } catch (err) {
       res.status(401).json(err);
     }

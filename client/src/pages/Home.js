@@ -47,8 +47,8 @@ const Home = () => {
       ) : (
         <div>
           <h3>Welcome to your dashboard, chef!</h3>
-          <h3>Create some new recipes!</h3>
           <CreatePizza />
+          <ChefDashboard />
         </div>
       )}
     </div>

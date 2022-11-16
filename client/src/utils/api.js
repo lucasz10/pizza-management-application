@@ -59,8 +59,8 @@ export const deleteTopping = (toppingId) => {
 };
 
 // Pizza API Requests
-export const getAllPizzas = () => {
-  return fetch('/api/pizza', {
+export const getAllPizzas = (chef_id) => {
+  return fetch(`/api/pizza/${chef_id}`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -69,7 +69,7 @@ export const getAllPizzas = () => {
 };
 
 export const createPizza = (pizzaData) => {
-  return fetch('/api/pizza', {
+  return fetch('/api/pizza/', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -90,10 +90,9 @@ export const updatePizza = (pizzaData) => {
 
 export const deletePizza = (pizzaId) => {
   return fetch(`/api/pizza/${pizzaId}`, {
-    method: 'PUT',
+    method: 'DELETE',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(pizzaId),
   });
 };
