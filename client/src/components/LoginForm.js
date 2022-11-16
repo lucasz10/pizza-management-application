@@ -1,64 +1,55 @@
 import React, { useState } from 'react';
 import { login } from '../utils/api';
-import { useNavigate } from 'react-router-dom';
+
+import Auth from '../utils/auth';
 
 function LoginForm() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [formState, setFormState] = useState({ email: '', password: '' });
   const [errorMessage, setErrorMessage] = useState('');
 
-  let navigate = useNavigate();
-
   const handleInputChange = (e) => {
-    const { target } = e;
-    const inputType = target.name;
-    const inputValue = target.value;
+    const { name, value } = e.target;
 
-    if (inputType === 'email') {
-      setEmail(inputValue);
-    } else {
-      setPassword(inputValue);
-    }
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
   };
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    const formData = {
-      email: email,
-      password: password,
-    };
-
     try {
-      const res = await login(formData);
-
+      const res = await login(formState);
       if (!res.ok) {
-        setErrorMessage('Email or username is invalid');
-        throw new Error('something went wrong!');
+        setErrorMessage('Invalid email or password!');
+        return;
       }
-
-      localStorage.setItem('logged_in', true);
-      navigate(`/`);
+      const data = await res.json();
+      console.log(data);
+      Auth.loginToken(data);
     } catch (err) {
       console.error(err);
     }
 
-    setPassword('');
-    setEmail('');
+    setFormState({
+      email: '',
+      password: '',
+    });
   };
 
   return (
     <div>
       <form className="form">
         <input
-          value={email}
+          value={formState.email}
           name="email"
           onChange={handleInputChange}
           type="email"
           placeholder="email"
         />
         <input
-          value={password}
+          value={formState.password}
           name="password"
           onChange={handleInputChange}
           type="password"

@@ -19,17 +19,21 @@ class AuthService {
     return localStorage.getItem('id_token');
   }
 
-  login(idToken) {
+  loginToken(idToken) {
     // Saves user token to localStorage and reloads the application for logged in status to take effect
-    localStorage.setItem('id_token', idToken);
+    localStorage.setItem('id_token', idToken.token);
+    localStorage.setItem('isOwner', idToken.userData.isOwner);
+    localStorage.setItem('user_id', idToken.userData._id);
     window.location.assign('/');
   }
 
   logout() {
     // Clear user token and profile data from localStorage
     localStorage.removeItem('id_token');
+    localStorage.removeItem('user_id');
+    localStorage.removeItem('isOwner');
     // this will reload the page and reset the state of the application
-    window.location.reload();
+    window.location.assign('/login');
   }
 }
 

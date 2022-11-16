@@ -19,33 +19,6 @@ export const login = (userData) => {
   });
 };
 
-export const logout = () => {
-  return fetch('/api/user/logout', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-};
-
-export const getLoggedInStatus = () => {
-  return fetch('/api/user/isLoggedIn', {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-};
-
-export const getOwnerStatus = () => {
-  return fetch('/api/user/isLoggedIn', {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  });
-};
-
 // Topping API requests
 export const getAllToppings = (userId) => {
   return fetch(`/api/topping/${userId}`, {

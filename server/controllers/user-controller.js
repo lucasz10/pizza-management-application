@@ -11,13 +11,13 @@ module.exports = {
         return;
       }
 
-      if (req.session.logged_in && req.session.isOwner) {
+      if (req.body.logged_in && req.body.isOwner) {
         await User.create({
           username: req.body.username,
           email: req.body.email,
           password: req.body.password,
           isOwner: false,
-          owner_id: req.session.user_id,
+          owner_id: req.body.user_id,
         });
       } else {
         await User.create(req.body);
@@ -48,8 +48,10 @@ module.exports = {
       }
 
       const token = signToken(userData);
-      res.status(200).json({ message: 'Logged In Successfully!' });
-      return { token, userData };
+      res
+        .status(200)
+        .json({ message: 'Logged In Successfully!', token, userData });
+      return;
     } catch (err) {
       res.status(400).json(err);
     }

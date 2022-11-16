@@ -1,35 +1,19 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { getLoggedInStatus, getOwnerStatus } from '../utils/api';
+import React, { useEffect, useState } from 'react';
 
 const Home = () => {
-  let navigate = useNavigate;
-  const [isOwner, setIsOwner] = useState(true);
+  const [isOwner, setOwner] = useState();
 
   useEffect(() => {
-    const loginStatus = async () => {
-      try {
-        const res = await getLoggedInStatus();
-        if (!res.ok) {
-          setIsOwner(false);
-        }
-      } catch (err) {
-        console.error(err);
-      }
-    };
+    const checkOwner = () => {
+      const storedOwner = localStorage.getItem('isOwner');
 
-    const ownerStatus = async () => {
-      try {
-        const res = await getLoggedInStatus();
-        if (res.ok) {
-          navigate('/');
-        }
-      } catch (err) {
-        console.error(err);
+      if (storedOwner === 'false') {
+        setOwner(false);
+      } else {
+        setOwner(true);
       }
     };
-    loginStatus();
-    ownerStatus();
+    checkOwner();
   });
 
   return (
