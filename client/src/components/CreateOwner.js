@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { createUser } from '../utils/api';
 
+// import helper functions
 import { checkPassword, validateEmail } from '../utils/helpers';
 
 function CreateOwner() {
@@ -23,6 +24,7 @@ function CreateOwner() {
     }
   };
 
+  // Handles form submit to create a new owner account
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 

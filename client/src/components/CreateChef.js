@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { createUser } from '../utils/api';
 
+// import helper functions
 import { checkPassword, validateEmail } from '../utils/helpers';
 
 function CreateChef() {
@@ -23,9 +24,11 @@ function CreateChef() {
     }
   };
 
+  // handles form submitting to create a chef account
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 
+    // Validates email and password before sending them to the server
     if (!validateEmail(email) || !userName) {
       setErrorMessage('Email or username is invalid');
       return;

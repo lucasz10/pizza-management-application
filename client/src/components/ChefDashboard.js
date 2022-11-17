@@ -25,6 +25,7 @@ const ChefDashboard = () => {
     getPizzaList();
   }, []);
 
+  // Handles input form for updating pizza name
   const handleInputChange = (e) => {
     const { target } = e;
     const inputType = target.name;
@@ -35,6 +36,7 @@ const ChefDashboard = () => {
     }
   };
 
+  // Handles button click to send api PUT request to server
   const handlePizzaUpdate = async (e) => {
     e.preventDefault();
 
@@ -54,11 +56,13 @@ const ChefDashboard = () => {
       console.error(err);
     }
 
+    // alerts user of success and reloads the DOM
     setUpdatedPizzaName('');
     alert('Pizza Name updated Successfully!');
     window.location.reload();
   };
 
+  //Handles button click to send api DELETE request to server
   const handlePizzaDelete = async (e) => {
     e.preventDefault();
     console.log(e.target.value);

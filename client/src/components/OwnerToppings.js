@@ -42,6 +42,7 @@ const OwnerToppings = () => {
     }
   };
 
+  // Handles button click for submitting a new Topping
   const handleNewToppingSubmit = async (e) => {
     e.preventDefault();
 
@@ -67,6 +68,7 @@ const OwnerToppings = () => {
     window.location.reload();
   };
 
+  // handles button click for Updating a Topping
   const handleToppingUpdate = async (e) => {
     e.preventDefault();
 
@@ -91,6 +93,7 @@ const OwnerToppings = () => {
     window.location.reload();
   };
 
+  // Handles button click to delete a topping
   const handleToppingDelete = async (e) => {
     e.preventDefault();
 

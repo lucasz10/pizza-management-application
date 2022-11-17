@@ -16,6 +16,7 @@ function LoginForm() {
     });
   };
 
+  // Handles form submit for creating a user
   const handleFormSubmit = async (e) => {
     e.preventDefault();
 

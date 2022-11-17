@@ -4,18 +4,20 @@ import { useNavigate } from 'react-router-dom';
 // Import react-bootstrap styles
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+// Import Components for use
 import CreateChef from '../components/CreateChef';
 import OwnerToppings from '../components/OwnerToppings';
 import ChefDashboard from '../components/ChefDashboard';
 import CreatePizza from '../components/CreatePizza';
 
+// Import Auth methods from Utils
 import Auth from '../utils/auth';
 
 const Home = () => {
   const [isOwner, setOwner] = useState();
   let navigate = useNavigate();
   useEffect(() => {
-    // Checks if user is logged in. If they are, reroutes them to homepage
+    // Checks if user is logged in. If they are not, reroutes them to login
     const checkLoggedIn = () => {
       if (!Auth.loggedIn()) {
         navigate('/login');

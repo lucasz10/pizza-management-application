@@ -37,6 +37,7 @@ const CreatePizza = () => {
   const addTopping = (e) => {
     e.preventDefault();
 
+    // finds if there's an existing topping in the newPizzaToppings array
     for (let i = 0; i < newPizzaToppings.length; i++) {
       if (newPizzaToppings[i] === e.target.value) {
         return;
@@ -50,6 +51,7 @@ const CreatePizza = () => {
     e.preventDefault();
     const name = e.target.value;
 
+    // searches for target value and removes it from newPizzaToppings
     setNewTopping(newPizzaToppings.filter((topping) => topping !== name));
   };
 
